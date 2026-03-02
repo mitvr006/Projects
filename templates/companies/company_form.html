@@ -1,0 +1,7 @@
+<h2>Company Form</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'company_list' %}">Back</a>

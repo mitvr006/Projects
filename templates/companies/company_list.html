@@ -1,0 +1,22 @@
+<h2>Company List</h2>
+<a href="{% url 'company_create' %}">Add Company</a>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Actions</th>
+    </tr>
+    {% for company in companies %}
+    <tr>
+        <td>{{ company.name }}</td>
+        <td>{{ company.phone }}</td>
+        <td>{{ company.address }}</td>
+        <td>
+            <a href="{% url 'company_update' company.pk %}">Edit</a>
+            <a href="{% url 'company_delete' company.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

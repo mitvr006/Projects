@@ -1,0 +1,26 @@
+<h2>Medicine List</h2>
+<a href="{% url 'medicine_create' %}">Add Medicine</a>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Expiry</th>
+        <th>Actions</th>
+    </tr>
+    {% for medicine in medicines %}
+    <tr>
+        <td>{{ medicine.name }}</td>
+        <td>{{ medicine.company.name }}</td>
+        <td>{{ medicine.price }}</td>
+        <td>{{ medicine.quantity }}</td>
+        <td>{{ medicine.expiry_date }}</td>
+        <td>
+            <a href="{% url 'medicine_update' medicine.pk %}">Edit</a>
+            <a href="{% url 'medicine_delete' medicine.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

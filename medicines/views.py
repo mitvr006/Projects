@@ -37,3 +37,44 @@ def company_delete(request, pk):
         company.delete()
         return redirect('company_list')
     return render(request, 'companies/company_delete.html', {'company': company})
+
+
+# ===== MEDICINE CRUD START =====
+
+from .models import Medicine
+
+
+class MedicineForm(forms.ModelForm):
+    class Meta:
+        model = Medicine
+        fields = '__all__'
+
+
+def medicine_list(request):
+    medicines = Medicine.objects.select_related('company').all()
+    return render(request, 'medicines/medicine_list.html', {'medicines': medicines})
+
+
+def medicine_create(request):
+    form = MedicineForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('medicine_list')
+    return render(request, 'medicines/medicine_form.html', {'form': form})
+
+
+def medicine_update(request, pk):
+    medicine = get_object_or_404(Medicine, pk=pk)
+    form = MedicineForm(request.POST or None, instance=medicine)
+    if form.is_valid():
+        form.save()
+        return redirect('medicine_list')
+    return render(request, 'medicines/medicine_form.html', {'form': form})
+
+
+def medicine_delete(request, pk):
+    medicine = get_object_or_404(Medicine, pk=pk)
+    if request.method == "POST":
+        medicine.delete()
+        return redirect('medicine_list')
+    return render(request, 'medicines/medicine_delete.html', {'medicine': medicine})

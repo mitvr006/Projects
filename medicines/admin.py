@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Company, Medicine
+from .models import Company, Medicine, Sale
 from datetime import date, timedelta
 
 @admin.register(Company)
@@ -20,6 +20,12 @@ class MedicineAdmin(admin.ModelAdmin):
         return "ok"
     
     expiry_status.short_description = "status"
+
+
+@admin.register(Sale)
+class SaleAdmin(admin.ModelAdmin):
+    list_display = ('medicine', 'quantity', 'total_price', 'date')
+    list_filter = ('date',)
 
 
 admin.site.site_header = "Medical Management Admin"

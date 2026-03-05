@@ -1,7 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <h2>Company Form</h2>
-<form method="post">
+<form method="post" class="card p-4 shadow">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
+    <button class="btn btn-success" type="submit">Save</button>
 </form>
 <a href="{% url 'company_list' %}">Back</a>
+
+
+{% endblock %}

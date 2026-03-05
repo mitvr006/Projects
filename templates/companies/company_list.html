@@ -1,22 +1,31 @@
-<h2>Company List</h2>
-<a href="{% url 'company_create' %}">Add Company</a>
+{% extends 'base.html' %}
+{% block content %}
 
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Actions</th>
-    </tr>
-    {% for company in companies %}
-    <tr>
-        <td>{{ company.name }}</td>
-        <td>{{ company.phone }}</td>
-        <td>{{ company.address }}</td>
-        <td>
-            <a href="{% url 'company_update' company.pk %}">Edit</a>
-            <a href="{% url 'company_delete' company.pk %}">Delete</a>
-        </td>
-    </tr>
-    {% endfor %}
+<h2>Company List</h2>
+<a class="btn btn-primary mb-3" href="{% url 'company_create' %}">Add Company</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>    
+        {% for company in companies %}
+        <tr>
+            <td>{{ company.name }}</td>
+            <td>{{ company.phone }}</td>
+            <td>{{ company.address }}</td>
+            <td>
+                <a class="btn btn-warning btn-sm" href="{% url 'company_update' company.pk %}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'company_delete' company.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>    
 </table>
+
+{% endblock %}

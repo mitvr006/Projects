@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Sales List</h2>
+
+<a class="btn btn-primary mb-3" href="{% url 'sale_create' %}">Create Sale</a>
+
+<table class="table table-bordered">
+<tr>
+<th>Medicine</th>
+<th>Quantity</th>
+<th>Total Price</th>
+<th>Date</th>
+</tr>
+
+{% for sale in sales %}
+<tr>
+<td>{{ sale.medicine.name }}</td>
+<td>{{ sale.quantity }}</td>
+<td>{{ sale.total_price }}</td>
+<td>{{ sale.date }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

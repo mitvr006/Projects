@@ -1,7 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Company
+from .models import Company, Sale
 from django import forms
 
+# ===== sale CRUD START =====
+class SaleForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = ['medicine', 'quantity']
+
+def sale_create(request):
+    form = SaleForm(request.POST or None)
+
+    if form.is_valid():
+        sale = form.save(commit=False)
+
+        medicine = sale.medicine
+        sale.total_price = medicine.price * sale.quantity
+
+        sale.save()
+
+        return redirect('sale_list')
+
+    return render(request, 'sales/sale_form.html', {'form': form})
+
+def sale_list(request):
+    sales = Sale.objects.select_related('medicine').all()
+    return render(request, 'sales/sale_list.html', {'sales': sales})
+
+
+# ===== company CRUD START =====
 
 class CompanyForm(forms.ModelForm):
     class Meta:
@@ -78,3 +105,4 @@ def medicine_delete(request, pk):
         medicine.delete()
         return redirect('medicine_list')
     return render(request, 'medicines/medicine_delete.html', {'medicine': medicine})
+

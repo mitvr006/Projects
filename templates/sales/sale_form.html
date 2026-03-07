@@ -3,6 +3,12 @@
 
 <h2>Create Sale</h2>
 
+{% if error %}
+<div class="alert alert-danger">
+{{ error }}    
+</div>
+{% endif %}
+
 <form method="post" class="card p-4 shadow">
 {% csrf_token %}
 {{ form.as_p }}

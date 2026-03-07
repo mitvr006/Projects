@@ -15,7 +15,21 @@ def sale_create(request):
         sale = form.save(commit=False)
 
         medicine = sale.medicine
-        sale.total_price = medicine.price * sale.quantity
+        quantity = sale.quantity
+
+        # stock check
+        if quantity > medicine.quantity:
+            return render(request, 'sales/sale_form.html',{
+              'form': form,
+              'error': "Not enough stock availablel"  
+            })
+        
+        # Total price calculate
+        sale.total_price = medicine.price * quantity
+
+        # stock reduce
+        medicine.quantity -= quantity
+        medicine.save()
 
         sale.save()
 

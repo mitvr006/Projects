@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card p-4 shadow">
+
+<h2>Medical Store Invoice</h2>
+
+<hr>
+
+<p><strong>Medicine:</strong> {{ sale.medicine.name }}</p>
+<p><strong>Company:</strong> {{ sale.medicine.company.name }}</p>
+<p><strong>Quantity:</strong> {{ sale.quantity }}</p>
+<p><strong>Price per unit:</strong> ₹{{ sale.medicine.price }}</p>
+
+<hr>
+
+<h4>Total Price: ₹{{ sale.total_price }}</h4>
+
+<p>Date: {{ sale.date }}</p>
+
+<a class="btn btn-primary mt-3" href="{% url 'sale_list' %}">
+Back to Sales
+</a>
+
+</div>
+
+{% endblock %}

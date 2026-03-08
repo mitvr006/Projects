@@ -33,9 +33,13 @@ def sale_create(request):
 
         sale.save()
 
-        return redirect('sale_list')
+        return redirect('sale_invoice', pk=sale.pk)
 
     return render(request, 'sales/sale_form.html', {'form': form})
+
+def sale_invoice(request, pk):
+    sale = Sale.objects.get(pk=pk)
+    return render(request, 'sales/invoice.html', {'sale': sale})
 
 def sale_list(request):
     sales = Sale.objects.select_related('medicine').all()

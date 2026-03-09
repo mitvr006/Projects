@@ -24,8 +24,16 @@ def sale_create(request):
               'error': "Not enough stock availablel"  
             })
         
+        # base price
+        base_price = medicine.price * quantity
+
+        # GST calculation
+        gst_amount = base_price * (medicine.gst / 100)
+
+        total = base_price + gst_amount
+        
         # Total price calculate
-        sale.total_price = medicine.price * quantity
+        sale.total_price = total
 
         # stock reduce
         medicine.quantity -= quantity

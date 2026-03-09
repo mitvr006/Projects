@@ -10,7 +10,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(Medicine)
 class MedicineAdmin(admin.ModelAdmin):
-    list_display = ('name', 'company', 'price', 'quantity', 'expiry_date')
+    list_display = ('name', 'company', 'price', 'gst', 'quantity', 'expiry_date')
     list_filter = ('company', 'expiry_date')
     search_fields = ('name',)
 

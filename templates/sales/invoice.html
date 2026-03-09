@@ -11,10 +11,11 @@
 <p><strong>Company:</strong> {{ sale.medicine.company.name }}</p>
 <p><strong>Quantity:</strong> {{ sale.quantity }}</p>
 <p><strong>Price per unit:</strong> ₹{{ sale.medicine.price }}</p>
+<p><strong>GST:</strong> {{ sale.medicine.gst }}%</p>
 
 <hr>
 
-<h4>Total Price: ₹{{ sale.total_price }}</h4>
+<h4>Total Price (with GST): ₹{{ sale.total_price }}</h4>
 
 <p>Date: {{ sale.date }}</p>
 

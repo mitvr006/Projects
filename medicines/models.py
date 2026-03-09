@@ -15,6 +15,7 @@ class Medicine(models.Model):
     price = models.FloatField()
     quantity = models.IntegerField()
     expiry_date = models.DateField()
+    gst = models.FloatField(default=0)
 
     def __str__(self):
         return self.name

@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Company, Sale
 from django import forms
+from django.utils import timezone
+from django.db.models import Sum
 
 # ===== sale CRUD START =====
 class SaleForm(forms.ModelForm):
@@ -132,3 +134,21 @@ def medicine_delete(request, pk):
         return redirect('medicine_list')
     return render(request, 'medicines/medicine_delete.html', {'medicine': medicine})
 
+
+# ===== Daily Sales Report START =====
+
+def daily_report(request):
+    today = timezone.now().date()
+
+    sales = Sale.objects.filter(date__date=today)
+
+    total_sales =sales.count()
+
+    total_revenue = sales.aggregate(Sum('total_price'))['total_price__sum'] or 0
+
+    return render(request, 'reports/daily_report.html', {
+        'sales': sales,
+        'total_sales': total_sales,
+        'total_revenue': total_revenue,
+        'today': today
+    })

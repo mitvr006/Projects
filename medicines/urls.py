@@ -13,4 +13,5 @@ urlpatterns = [
     path('sales/', views.sale_list, name='sale_list'),
     path('sales/add/', views.sale_create, name='sale_create'),
     path('sales/invoice/<int:pk>/', views.sale_invoice, name='sale_invoice'),
+    path('reports/daily/', views.daily_report, name='daily_report'),
 ]

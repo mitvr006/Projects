@@ -152,3 +152,10 @@ def daily_report(request):
         'total_revenue': total_revenue,
         'today': today
     })
+
+def low_stock (request):
+    medicines = Medicine.objects.filter(quantity__lt=5)
+
+    return render(request, 'reports/low_stock.html',{
+        'medicines': medicines
+    })

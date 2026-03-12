@@ -14,5 +14,6 @@ urlpatterns = [
     path('sales/add/', views.sale_create, name='sale_create'),
     path('sales/invoice/<int:pk>/', views.sale_invoice, name='sale_invoice'),
     path('reports/daily/', views.daily_report, name='daily_report'),
-    path('reports/low_stock/', views.low_stock, name='low_stock')
+    path('reports/low_stock/', views.low_stock, name='low_stock'),
+    path('reports/expiry_alert/', views.expiry_alert, name='expiry_alert'),
 ]

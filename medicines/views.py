@@ -3,6 +3,7 @@ from .models import Company, Sale
 from django import forms
 from django.utils import timezone
 from django.db.models import Sum
+from datetime import date, timedelta
 
 # ===== sale CRUD START =====
 class SaleForm(forms.ModelForm):
@@ -157,5 +158,16 @@ def low_stock (request):
     medicines = Medicine.objects.filter(quantity__lt=5)
 
     return render(request, 'reports/low_stock.html',{
+        'medicines': medicines
+    })
+
+
+def expiry_alert(request):
+    today = date.today()
+    alert_date = today + timedelta(days=30)
+
+    medicines = Medicine.objects.filter(expiry_date__lte=alert_date)
+
+    return render(request, 'reports/expiry_alert.html', {
         'medicines': medicines
     })

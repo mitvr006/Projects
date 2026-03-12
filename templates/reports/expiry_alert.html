@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Expiry Alert Medicines</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Medicine</th>
+<th>Company</th>
+<th>Expiry Date</th>
+<th>Status</th>
+</tr>
+
+{% for medicine in medicines %}
+
+<tr>
+<td>{{ medicine.name }}</td>
+<td>{{ medicine.company.name }}</td>
+<td>{{ medicine.expiry_date }}</td>
+<td style="color:red;">⚠ Expiring Soon</td>
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4">No medicines expiring soon</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

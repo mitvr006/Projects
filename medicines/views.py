@@ -171,3 +171,20 @@ def expiry_alert(request):
     return render(request, 'reports/expiry_alert.html', {
         'medicines': medicines
     })
+
+
+def dashboard(request):
+    total_companies = Company.objects.count()
+
+    total_medicines = Medicine.objects.count()
+
+    total_sales = Sale.objects.count()
+
+    total_revenue = Sale.objects.aggregate(Sum('total_price'))['total_price__sum'] or 0
+
+    return render(request, 'dashboard.html', {
+        'total_companies': total_companies,
+        'total_medicines': total_medicines,
+        'total_sales': total_sales,
+        'total_revenue': total_revenue
+    })

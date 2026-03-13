@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Medical Dashboard</h2>
+
+<div class="row">
+
+<div class="col-md-3">
+<div class="card bg-primary text-white p-3">
+<h4>Total Companies</h4>
+<h2>{{ total_companies }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card bg-success text-white p-3">
+<h4>Total Medicines</h4>
+<h2>{{ total_medicines }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card bg-warning text-white p-3">
+<h4>Total Sales</h4>
+<h2>{{ total_sales }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card bg-danger text-white p-3">
+<h4>Total Revenue</h4>
+<h2>₹{{ total_revenue }}</h2>
+</div>
+</div>
+
+</div>
+
+{% endblock %}

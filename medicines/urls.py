@@ -16,4 +16,5 @@ urlpatterns = [
     path('reports/daily/', views.daily_report, name='daily_report'),
     path('reports/low_stock/', views.low_stock, name='low_stock'),
     path('reports/expiry_alert/', views.expiry_alert, name='expiry_alert'),
+    path('', views.dashboard, name='dashboard'),
 ]

@@ -4,6 +4,7 @@ from django import forms
 from django.utils import timezone
 from django.db.models import Sum
 from datetime import date, timedelta
+import json
 
 # ===== sale CRUD START =====
 class SaleForm(forms.ModelForm):
@@ -174,17 +175,31 @@ def expiry_alert(request):
 
 
 def dashboard(request):
+
     total_companies = Company.objects.count()
-
     total_medicines = Medicine.objects.count()
-
     total_sales = Sale.objects.count()
-
     total_revenue = Sale.objects.aggregate(Sum('total_price'))['total_price__sum'] or 0
 
-    return render(request, 'dashboard.html', {
+    today = timezone.now().date()
+    last_week = today - timedelta(days=7)
+
+    sales = Sale.objects.filter(date__date__gte=last_week)
+
+    sales_dates = []
+    sales_amounts = []
+
+    for sale in sales:
+        sales_dates.append(sale.date.strftime("%Y-%m-%d"))
+        sales_amounts.append(sale.total_price)
+
+    context = {
         'total_companies': total_companies,
         'total_medicines': total_medicines,
         'total_sales': total_sales,
-        'total_revenue': total_revenue
-    })
+        'total_revenue': total_revenue,
+        'sales_dates': json.dumps(sales_dates),
+        'sales_amounts': json.dumps(sales_amounts)
+    }        
+
+    return render(request, 'dashboard.html', context)

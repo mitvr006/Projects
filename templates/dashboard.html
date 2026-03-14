@@ -35,4 +35,55 @@
 
 </div>
 
+
+<!-- SALES CHART CARD -->
+
+<div class="card mt-4 p-4">
+
+<h4>Last 7 Days Sales</h4>
+
+<canvas id="salesChart"></canvas>
+
+</div>
+
+
+<!-- CHART.JS CDN -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- CHART SCRIPT -->
+
+<script>
+
+const labels = JSON.parse('{{ sales_dates|escapejs }}');
+const dataValues = JSON.parse('{{ sales_amounts|escapejs }}');
+
+const ctx = document.getElementById('salesChart');
+
+new Chart(ctx, {
+type: 'line',
+
+data: {
+labels: labels,
+
+datasets: [{
+label: 'Sales Amount',
+data: dataValues,
+borderWidth: 2
+}]
+},
+
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+
+});
+
+</script>
+
 {% endblock %}

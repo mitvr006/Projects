@@ -108,8 +108,17 @@ class MedicineForm(forms.ModelForm):
 
 
 def medicine_list(request):
-    medicines = Medicine.objects.select_related('company').all()
-    return render(request, 'medicines/medicine_list.html', {'medicines': medicines})
+
+    query = request.GET.get('q')
+
+    if query:
+        medicines = Medicine.objects.filter(name__icontains=query)
+    else:
+        medicines = Medicine.objects.all()
+
+    return render(request, 'medicines/medicine_list.html', {
+        'medicines': medicines
+    })
 
 
 def medicine_create(request):

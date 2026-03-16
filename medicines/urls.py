@@ -17,4 +17,6 @@ urlpatterns = [
     path('reports/low_stock/', views.low_stock, name='low_stock'),
     path('reports/expiry_alert/', views.expiry_alert, name='expiry_alert'),
     path('', views.dashboard, name='dashboard'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
 ]

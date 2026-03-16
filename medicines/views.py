@@ -5,7 +5,8 @@ from django.utils import timezone
 from django.db.models import Sum
 from datetime import date, timedelta
 import json
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 # ===== sale CRUD START =====
 class SaleForm(forms.ModelForm):
     class Meta:
@@ -182,7 +183,7 @@ def expiry_alert(request):
         'medicines': medicines
     })
 
-
+@login_required
 def dashboard(request):
 
     total_companies = Company.objects.count()
@@ -212,3 +213,26 @@ def dashboard(request):
     }        
 
     return render(request, 'dashboard.html', context)
+
+
+def login_view(request):
+
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            return render(request, 'auth/login.html',{
+                'error': "Invalid username or password"
+            })
+        
+    return render(request, 'auth/login.html')    
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

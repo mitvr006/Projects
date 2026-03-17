@@ -6,7 +6,7 @@ from django.db.models import Sum
 from datetime import date, timedelta
 import json
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, is_admin
 # ===== sale CRUD START =====
 class SaleForm(forms.ModelForm):
     class Meta:
@@ -54,6 +54,7 @@ def sale_invoice(request, pk):
     sale = Sale.objects.get(pk=pk)
     return render(request, 'sales/invoice.html', {'sale': sale})
 
+@login_required
 def sale_list(request):
     sales = Sale.objects.select_related('medicine').all()
     return render(request, 'sales/sale_list.html', {'sales': sales})
@@ -66,7 +67,7 @@ class CompanyForm(forms.ModelForm):
         model = Company
         fields = '__all__'
 
-
+@user_passes_test(is_admin)
 def company_list(request):
     companies = Company.objects.all()
     return render(request, 'companies/company_list.html', {'companies': companies})
@@ -107,7 +108,7 @@ class MedicineForm(forms.ModelForm):
         model = Medicine
         fields = '__all__'
 
-
+@user_passes_test(is_admin)
 def medicine_list(request):
 
     query = request.GET.get('q')
@@ -236,3 +237,11 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def is_admin(user):
+    return user.groups.filter(name='Admin').exists()
+
+
+def is_staff(user):
+    return user.groups.filter(name='Staff').exists()
+

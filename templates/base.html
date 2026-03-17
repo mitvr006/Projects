@@ -10,14 +10,22 @@
   <div class="container">
     <a class="navbar-brand" href="#">Medical System</a>
     <div>
+
+      {% if request.user.groups.all.0.name == "Admin" %}
+
       <a class="btn btn-outline-light me-2" href="{% url 'company_list' %}">Companies</a>
       <a class="btn btn-outline-light" href="{% url 'medicine_list' %}">Medicines</a>
-      <a class="btn btn-outline-light" href="{% url 'sale_list' %}">Sales</a>
       <a class="btn btn-outline-light" href="{% url 'daily_report' %}">Daily Report</a>
-      <a class="btn btn-outline-light" href="{% url 'low_stock' %}">low stock</a>
+      <a class="btn btn-outline-light" href="{% url 'low_stock' %}">Low stock</a>
       <a class="btn btn-outline-light" href="{% url 'expiry_alert' %}">Expiry Alert</a>
       <a class="btn btn-outline-light" href="{% url 'dashboard' %}">Dashboard</a>
+
+      {% endif %}
+
+      <a class="btn btn-outline-light" href="{% url 'sale_list' %}">Sales</a>
+
       <a class="btn btn-outline-light" href="{% url 'logout' %}">Logout</a>
+      
     </div>
   </div>
 </nav>

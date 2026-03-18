@@ -5,8 +5,18 @@ from django.utils import timezone
 from django.db.models import Sum
 from datetime import date, timedelta
 import json
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test, is_admin
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+def is_admin(user):
+    return user.groups.filter(name='Admin').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Staff').exists()
+
+
 # ===== sale CRUD START =====
 class SaleForm(forms.ModelForm):
     class Meta:
@@ -17,41 +27,49 @@ def sale_create(request):
     form = SaleForm(request.POST or None)
 
     if form.is_valid():
-        sale = form.save(commit=False)
+        try:
+            sale = form.save(commit=False)
 
-        medicine = sale.medicine
-        quantity = sale.quantity
+            medicine = sale.medicine
+            quantity = sale.quantity
 
-        # stock check
-        if quantity > medicine.quantity:
-            return render(request, 'sales/sale_form.html',{
-              'form': form,
-              'error': "Not enough stock availablel"  
-            })
+            # stock check
+            if quantity <= 0:
+                messages.error(request, "Quantity must be greater than 0")
+                return redirect('sale_create')
+
+            if quantity > medicine.quantity:
+                messages.error(request, "Not enough stock availablel")
+                return redirect('sale_create')
         
-        # base price
-        base_price = medicine.price * quantity
+            # base price
+            base_price = medicine.price * quantity
 
-        # GST calculation
-        gst_amount = base_price * (medicine.gst / 100)
+            # GST calculation
+            gst_amount = base_price * (medicine.gst / 100)
 
-        total = base_price + gst_amount
+            total = base_price + gst_amount
         
-        # Total price calculate
-        sale.total_price = total
+            # Total price calculate
+            sale.total_price = total
 
-        # stock reduce
-        medicine.quantity -= quantity
-        medicine.save()
+            # stock reduce
+            medicine.quantity -= quantity
+            medicine.save()
 
-        sale.save()
+            sale.save()
 
-        return redirect('sale_invoice', pk=sale.pk)
+            messages.success(request, "Sale completed successfully!")
 
+            return redirect('sale_invoice', pk=sale.pk)
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+            return redirect('sale_create')
+        
     return render(request, 'sales/sale_form.html', {'form': form})
 
 def sale_invoice(request, pk):
-    sale = Sale.objects.get(pk=pk)
+    sale = get_object_or_404(Sale, pk=pk)
     return render(request, 'sales/invoice.html', {'sale': sale})
 
 @login_required
@@ -77,7 +95,10 @@ def company_create(request):
     form = CompanyForm(request.POST or None)
     if form.is_valid():
         form.save()
+        messages.success(request, "Company added successfully!")
         return redirect('company_list')
+    
+    messages.error(request, "Something went wrong!")
     return render(request, 'companies/company_form.html', {'form': form})
 
 
@@ -125,9 +146,23 @@ def medicine_list(request):
 
 def medicine_create(request):
     form = MedicineForm(request.POST or None)
+
     if form.is_valid():
-        form.save()
+        medicine = form.save(commit=False)
+
+        if medicine.price <= 0:
+            messages.error(request, "Price must be greater than 0")
+            return redirect('medicine_create')
+        
+        if medicine.quantity < 0:
+            messages.error(request, "Quantity cannot be negative")
+            return redirect('medicine_create')
+        
+        medicine.save()
+        messages.success(request, "Medicine added successfully!")
         return redirect('medicine_list')
+    
+    messages.error(request, "Invalid datal!")
     return render(request, 'medicines/medicine_form.html', {'form': form})
 
 
@@ -228,14 +263,14 @@ def login_view(request):
             login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'auth/login.html',{
-                'error': "Invalid username or password"
-            })
+            messages.error(request, "Invalid username or password")
+            return redirect('login')
         
     return render(request, 'auth/login.html')    
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "Logged out successfully!")
     return redirect('login')
 
 def is_admin(user):

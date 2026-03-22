@@ -4,7 +4,8 @@ from django import forms
 from django.utils import timezone
 from django.db.models import Sum
 from datetime import date, timedelta
-import json
+import json, csv
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -85,7 +86,7 @@ class CompanyForm(forms.ModelForm):
         model = Company
         fields = '__all__'
 
-@user_passes_test(is_admin)
+@login_required
 def company_list(request):
     companies = Company.objects.all()
     return render(request, 'companies/company_list.html', {'companies': companies})
@@ -279,4 +280,25 @@ def is_admin(user):
 
 def is_staff(user):
     return user.groups.filter(name='Staff').exists()
+
+@login_required
+def export_sales_csv(request):
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="sales_report.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Medicine', 'Quantity', 'Total Price', 'Date'])
+
+    sales = Sale.objects.all()
+
+    for sale in sales:
+        writer.writerow([
+            sale.medicine.name,
+            sale.quantity,
+            sale.total_price,
+            sale.date
+        ])
+
+    return response    
 

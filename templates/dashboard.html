@@ -1,89 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Medical Dashboard</h2>
+<div class="container mt-4">
 
-<div class="row">
+<h2 class="mb-4 fw-bold">📊 Medical Dashboard</h2>
 
+<div class="row g-4">
+
+<!-- Companies -->
 <div class="col-md-3">
-<div class="card bg-primary text-white p-3">
-<h4>Total Companies</h4>
-<h2>{{ total_companies }}</h2>
+<div class="card shadow-lg border-0 text-center p-3">
+<h5 class="text-muted">Total Companies</h5>
+<h2 class="fw-bold text-primary">{{ total_companies }}</h2>
 </div>
 </div>
 
+<!-- Medicines -->
 <div class="col-md-3">
-<div class="card bg-success text-white p-3">
-<h4>Total Medicines</h4>
-<h2>{{ total_medicines }}</h2>
+<div class="card shadow-lg border-0 text-center p-3">
+<h5 class="text-muted">Total Medicines</h5>
+<h2 class="fw-bold text-success">{{ total_medicines }}</h2>
 </div>
 </div>
 
+<!-- Sales -->
 <div class="col-md-3">
-<div class="card bg-warning text-white p-3">
-<h4>Total Sales</h4>
-<h2>{{ total_sales }}</h2>
+<div class="card shadow-lg border-0 text-center p-3">
+<h5 class="text-muted">Total Sales</h5>
+<h2 class="fw-bold text-warning">{{ total_sales }}</h2>
 </div>
 </div>
 
+<!-- Revenue -->
 <div class="col-md-3">
-<div class="card bg-danger text-white p-3">
-<h4>Total Revenue</h4>
-<h2>₹{{ total_revenue }}</h2>
+<div class="card shadow-lg border-0 text-center p-3">
+<h5 class="text-muted">Total Revenue</h5>
+<h2 class="fw-bold text-danger">₹{{ total_revenue }}</h2>
 </div>
 </div>
 
 </div>
 
-
-<!-- SALES CHART CARD -->
-
-<div class="card mt-4 p-4">
-
-<h4>Last 7 Days Sales</h4>
-
+<!-- Chart -->
+<div class="card mt-5 shadow-lg border-0 p-4">
+<h4 class="mb-3">📈 Last 7 Days Sales</h4>
 <canvas id="salesChart"></canvas>
-
 </div>
 
-
-<!-- CHART.JS CDN -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<!-- CHART SCRIPT -->
-
-<script>
-
-const labels = JSON.parse('{{ sales_dates|escapejs }}');
-const dataValues = JSON.parse('{{ sales_amounts|escapejs }}');
-
-const ctx = document.getElementById('salesChart');
-
-new Chart(ctx, {
-type: 'line',
-
-data: {
-labels: labels,
-
-datasets: [{
-label: 'Sales Amount',
-data: dataValues,
-borderWidth: 2
-}]
-},
-
-options: {
-scales: {
-y: {
-beginAtZero: true
-}
-}
-}
-
-});
-
-</script>
+</div>
 
 {% endblock %}

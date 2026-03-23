@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: Arial;
+}
+
+h2 {
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table, th, td {
+    border: 1px solid black;
+    padding: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Medical Store Invoice</h2>
+
+<p><strong>Medicine:</strong> {{ sale.medicine.name }}</p>
+<p><strong>Company:</strong> {{ sale.medicine.company.name }}</p>
+<p><strong>Quantity:</strong> {{ sale.quantity }}</p>
+<p><strong>Price:</strong> ₹{{ sale.medicine.price }}</p>
+<p><strong>GST:</strong> {{ sale.medicine.gst }}%</p>
+
+<hr>
+
+<h3>Total: ₹{{ sale.total_price }}</h3>
+
+<p>Date: {{ sale.date }}</p>
+
+</body>
+</html>

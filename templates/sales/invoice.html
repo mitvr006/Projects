@@ -19,6 +19,8 @@
 
 <p>Date: {{ sale.date }}</p>
 
+<a href="{% url 'invoice_pdf' sale.pk %}" class="btn btn-danger mt-3">📄 Download PDF</a>
+
 <a class="btn btn-primary mt-3" href="{% url 'sale_list' %}">
 Back to Sales
 </a>

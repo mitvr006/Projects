@@ -4,6 +4,9 @@ from django import forms
 from django.utils import timezone
 from django.db.models import Sum
 from datetime import date, timedelta
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import BytesIO
 import json, csv
 from django.http import HttpResponse
 from django.contrib import messages
@@ -300,5 +303,23 @@ def export_sales_csv(request):
             sale.date
         ])
 
-    return response    
+    return response   
+
+def generate_invoice_pdf(request, pk):
+    sale = Sale.objects.get(pk=pk)
+
+    template = get_template('sales/invoice_pdf.html')
+    html = template.render({'sale': sale})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
+
+    pisa_status = pisa.CreatePDF(
+        html, dest=response
+    ) 
+
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF')
+    
+    return response
 

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5 text-center">
+
+<!-- Hero Section -->
+<div class="p-5 mb-4 bg-white rounded shadow">
+    <h1 class="fw-bold">💊 Welcome to Akash Medicos</h1>
+    <p class="text-muted">Smart Medical Management System</p>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-dark mt-3">
+        Go to Dashboard
+    </a>
+</div>
+
+<!-- Features -->
+<div class="row g-4 mt-4">
+
+<div class="col-12 col-md-4">
+<div class="card shadow p-4">
+<h4>📦 Medicines</h4>
+<p>Manage your medicine stock easily</p>
+<a href="{% url 'medicine_list' %}" class="btn btn-primary">Open</a>
+</div>
+</div>
+
+<div class="col-12 col-md-4">
+<div class="card shadow p-4">
+<h4>💰 Sales</h4>
+<p>Create bills and track sales</p>
+<a href="{% url 'sale_list' %}" class="btn btn-success">Open</a>
+</div>
+</div>
+
+<div class="col-12 col-md-4">
+<div class="card shadow p-4">
+<h4>📊 Reports</h4>
+<p>Check analytics and reports</p>
+<a href="{% url 'dashboard' %}" class="btn btn-warning">View</a>
+</div>
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -13,6 +13,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+@login_required
+def home(request):
+    return render(request, 'home.html')
 
 def is_admin(user):
     return user.groups.filter(name='Admin').exists()

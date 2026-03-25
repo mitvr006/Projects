@@ -44,7 +44,38 @@
 <!-- Chart -->
 <div class="card mt-5 shadow-lg border-0 p-4">
 <h4 class="mb-3">📈 Last 7 Days Sales</h4>
-<canvas id="salesChart"></canvas>
+<canvas id="salesChart" style="width: 100%; height: 300pxS;"></canvas>
+</div>
+
+</div>
+
+<div class="row mt-5 g-4 text-center">
+
+<!-- Low Stock -->
+<div class="col-12 col-md-4">
+<div class="card shadow p-4">
+<h4>⚠ Low Stock</h4>
+<p>Check medicines with low quantity</p>
+<a href="{% url 'low_stock' %}" class="btn btn-danger">Open</a>
+</div>
+</div>
+
+<!-- Expiry Alert -->
+<div class="col-12 col-md-4">
+<div class="card shadow p-4">
+<h4>⏳ Expiry Alert</h4>
+<p>Check medicines near expiry</p>
+<a href="{% url 'expiry_alert' %}" class="btn btn-warning">Open</a>
+</div>
+</div>
+
+<!-- Daily Report -->
+<div class="col-12 col-md-4">
+<div class="card shadow p-4">
+<h4>📊 Daily Report</h4>
+<p>View today's sales report</p>
+<a href="{% url 'daily_report' %}" class="btn btn-primary">Open</a>
+</div>
 </div>
 
 </div>

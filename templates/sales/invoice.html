@@ -19,6 +19,10 @@
 
 <p>Date: {{ sale.date }}</p>
 
+<button onclick="window.print()" class="btn btn-dark mt-3">
+🖨 Print Invoice
+</button>
+
 <a href="{% url 'invoice_pdf' sale.pk %}" class="btn btn-danger mt-3">📄 Download PDF</a>
 
 <a class="btn btn-primary mt-3" href="{% url 'sale_list' %}">

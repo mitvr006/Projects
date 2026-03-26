@@ -5,77 +5,81 @@
 
 <h2 class="mb-4 fw-bold">📊 Medical Dashboard</h2>
 
-<div class="row g-4">
+<!-- TOP CARDS -->
+<div class="row g-4 align-items-stretch">
 
 <!-- Companies -->
 <div class="col-12 col-sm-6 col-md-3">
-<div class="card shadow-lg border-0 text-center p-3">
-<h5 class="text-muted">Total Companies</h5>
+<div class="card dashboard-card text-center p-3 h-100">
+<h5 class="text-muted">🏢 Companies</h5>
 <h2 class="fw-bold text-primary">{{ total_companies }}</h2>
 </div>
 </div>
 
 <!-- Medicines -->
 <div class="col-12 col-sm-6 col-md-3">
-<div class="card shadow-lg border-0 text-center p-3">
-<h5 class="text-muted">Total Medicines</h5>
+<div class="card dashboard-card text-center p-3 h-100">
+<h5 class="text-muted">💊 Medicines</h5>
 <h2 class="fw-bold text-success">{{ total_medicines }}</h2>
 </div>
 </div>
 
 <!-- Sales -->
 <div class="col-12 col-sm-6 col-md-3">
-<div class="card shadow-lg border-0 text-center p-3">
-<h5 class="text-muted">Total Sales</h5>
+<div class="card dashboard-card text-center p-3 h-100">
+<h5 class="text-muted">💰 Sales</h5>
 <h2 class="fw-bold text-warning">{{ total_sales }}</h2>
 </div>
 </div>
 
 <!-- Revenue -->
 <div class="col-12 col-sm-6 col-md-3">
-<div class="card shadow-lg border-0 text-center p-3">
-<h5 class="text-muted">Total Revenue</h5>
+<div class="card dashboard-card text-center p-3 h-100">
+<h5 class="text-muted">📈 Revenue</h5>
 <h2 class="fw-bold text-danger">₹{{ total_revenue }}</h2>
 </div>
 </div>
 
 </div>
 
-<!-- Chart -->
-<div class="card mt-5 shadow-lg border-0 p-4">
+<!-- CHART -->
+<div class="card dashboard-card mt-5 p-4">
 <h4 class="mb-3">📈 Last 7 Days Sales</h4>
-<canvas id="salesChart" style="width: 100%; height: 300pxS;"></canvas>
+<canvas id="salesChart" style="width: 100%; height: 300px;"></canvas>
 </div>
 
-</div>
+<!-- QUICK ACTIONS -->
+<h3 class="mt-5 mb-3 fw-bold">⚙️ Quick Actions</h3>
 
-<div class="row mt-5 g-4 text-center">
+<div class="row g-4 align-items-stretch text-center">
 
 <!-- Low Stock -->
 <div class="col-12 col-md-4">
-<div class="card shadow p-4">
+<div class="card dashboard-card p-4 h-100">
 <h4>⚠ Low Stock</h4>
-<p>Check medicines with low quantity</p>
+<p class="text-muted">Check medicines with low quantity</p>
 <a href="{% url 'low_stock' %}" class="btn btn-danger">Open</a>
 </div>
 </div>
 
 <!-- Expiry Alert -->
 <div class="col-12 col-md-4">
-<div class="card shadow p-4">
+<div class="card dashboard-card p-4 h-100">
 <h4>⏳ Expiry Alert</h4>
-<p>Check medicines near expiry</p>
+<p class="text-muted">Check medicines near expiry</p>
 <a href="{% url 'expiry_alert' %}" class="btn btn-warning">Open</a>
 </div>
 </div>
 
 <!-- Daily Report -->
 <div class="col-12 col-md-4">
-<div class="card shadow p-4">
+<div class="card dashboard-card p-4 h-100">
 <h4>📊 Daily Report</h4>
-<p>View today's sales report</p>
+<p class="text-muted">View today's sales report</p>
 <a href="{% url 'daily_report' %}" class="btn btn-primary">Open</a>
 </div>
+</div>
+
 </div>
 
 </div>

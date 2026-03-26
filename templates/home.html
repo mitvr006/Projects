@@ -1,45 +1,93 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container mt-5 text-center">
+<style>
+.hero {
+    background: linear-gradient(135deg, #52a5ed, #52bcc2);
+    color: white;
+    padding: 60px 20px;
+    border-radius: 20px;
+}
 
-<!-- Hero Section -->
-<div class="p-5 mb-4 bg-white rounded shadow">
-    <h1 class="fw-bold">💊 Welcome to Akash Medicos</h1>
-    <p class="text-muted">Smart Medical Management System</p>
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
 
-    <a href="{% url 'dashboard' %}" class="btn btn-dark mt-3">
-        Go to Dashboard
+.hero p {
+    font-size: 1.1rem;
+}
+
+.feature-card {
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.btn:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+</style>
+
+<div class="container mt-5">
+
+<!-- 🔥 HERO SECTION -->
+<div class="hero text-center shadow">
+    <h1>💊 Akash Medicos</h1>
+    <p>Manage your pharmacy smartly & efficiently</p>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-light mt-3 px-4">
+        🚀 Go to Dashboard
     </a>
 </div>
 
-<!-- Features -->
-<div class="row g-4 mt-4">
+<!-- 🔥 FEATURES -->
+<div class="row mt-5 g-4 text-center">
 
 <div class="col-12 col-md-4">
-<div class="card shadow p-4">
-<h4>📦 Medicines</h4>
-<p>Manage your medicine stock easily</p>
+<div class="card feature-card shadow p-4">
+<div class="icon">📦</div>
+<h4>Medicines</h4>
+<p>Manage stock and medicine details</p>
 <a href="{% url 'medicine_list' %}" class="btn btn-primary">Open</a>
 </div>
 </div>
 
 <div class="col-12 col-md-4">
-<div class="card shadow p-4">
-<h4>💰 Sales</h4>
-<p>Create bills and track sales</p>
+<div class="card feature-card shadow p-4">
+<div class="icon">💰</div>
+<h4>Sales</h4>
+<p>Create bills and track sales easily</p>
 <a href="{% url 'sale_list' %}" class="btn btn-success">Open</a>
 </div>
 </div>
 
 <div class="col-12 col-md-4">
-<div class="card shadow p-4">
-<h4>📊 Reports</h4>
-<p>Check analytics and reports</p>
+<div class="card feature-card shadow p-4">
+<div class="icon">📊</div>
+<h4>Reports</h4>
+<p>View analytics and performance</p>
 <a href="{% url 'dashboard' %}" class="btn btn-warning">View</a>
 </div>
 </div>
 
+</div>
+
+<!-- 🔥 EXTRA INFO SECTION -->
+<div class="mt-5 text-center">
+<h3 class="fw-bold">Why Choose Us?</h3>
+<p class="text-muted">
+Fast, secure and easy-to-use medical management system for your business.
+</p>
 </div>
 
 </div>

@@ -1,8 +1,36 @@
-<h2>Are you sure you want to delete {{ medicine.name }}?</h2>
+{% extends 'base.html' %}
+{% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
-</form>
+<div class="container mt-5 d-flex justify-content-center">
 
-<a href="{% url 'medicine_list' %}">Cancel</a>
+<div class="card shadow-lg p-4 text-center" style="max-width: 400px; width: 100%; border-radius: 15px;">
+
+    <h3 class="text-danger mb-3">⚠ Confirm Delete</h3>
+
+    <p class="mb-4">
+        Are you sure you want to delete <br>
+        <strong>{{ medicine.name }}</strong>?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="d-flex justify-content-center gap-3">
+
+            <button type="submit" class="btn btn-danger px-4">
+                Yes, Delete
+            </button>
+
+            <a href="{% url 'medicine_list' %}" class="btn btn-secondary px-4">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}

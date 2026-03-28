@@ -136,7 +136,15 @@ class MedicineForm(forms.ModelForm):
         model = Medicine
         fields = '__all__'
 
-@user_passes_test(is_admin)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'company': forms.Select(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'gst': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+
 def medicine_list(request):
 
     query = request.GET.get('q')
@@ -151,25 +159,29 @@ def medicine_list(request):
     })
 
 
+from django.contrib import messages
+
 def medicine_create(request):
     form = MedicineForm(request.POST or None)
 
-    if form.is_valid():
-        medicine = form.save(commit=False)
+    if request.method == "POST":
 
-        if medicine.price <= 0:
-            messages.error(request, "Price must be greater than 0")
-            return redirect('medicine_create')
-        
-        if medicine.quantity < 0:
-            messages.error(request, "Quantity cannot be negative")
-            return redirect('medicine_create')
-        
-        medicine.save()
-        messages.success(request, "Medicine added successfully!")
-        return redirect('medicine_list')
-    
-    messages.error(request, "Invalid datal!")
+        if form.is_valid():
+            medicine = form.save(commit=False)
+
+            # Custom validation
+            if medicine.price <= 0:
+                messages.error(request, "Price must be greater than 0")
+                return render(request, 'medicines/medicine_form.html', {'form': form})
+            
+            if medicine.quantity < 0:
+                messages.error(request, "Quantity cannot be negative")
+                return render(request, 'medicines/medicine_form.html', {'form': form})
+            
+            medicine.save()
+            messages.success(request, "Medicine added successfully!")
+            return redirect('medicine_list')
+
     return render(request, 'medicines/medicine_form.html', {'form': form})
 
 

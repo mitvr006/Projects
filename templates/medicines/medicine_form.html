@@ -1,7 +1,45 @@
-<h2>Medicine Form</h2>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5 d-flex justify-content-center">
+
+<div class="card shadow-lg p-4" style="width: 600px; border-radius:15px;">
+
+<h3 class="text-center mb-4 fw-bold">💊 Add Medicine</h3>
+
+<!-- ERROR SHOW (Stylish) -->
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Error:</strong> Please correct the form below.
+</div>
+{% endif %}
+
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
+
+    {% for field in form %}
+    <div class="mb-3">
+        <label class="form-label fw-semibold">{{ field.label }}</label>
+        {{ field }}
+
+        <!-- Field Errors -->
+        {% for error in field.errors %}
+        <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary w-100 mt-3">
+        💾 Save Medicine
+    </button>
+
 </form>
-<a href="{% url 'medicine_list' %}">Back</a>
+
+<a href="{% url 'medicine_list' %}" class="btn btn-outline-secondary mt-3 w-100">
+⬅ Back
+</a>
+
+</div>
+</div>
+
+{% endblock %}

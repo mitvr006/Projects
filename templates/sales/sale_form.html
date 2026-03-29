@@ -1,19 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Create Sale</h2>
+<div class="container mt-5">
 
+<!-- Title -->
+<h2 class="text-center fw-bold mb-4">🧾 Create Sale</h2>
+
+<!-- Error -->
 {% if error %}
-<div class="alert alert-danger">
-{{ error }}    
+<div class="alert alert-danger text-center">
+    {{ error }}    
 </div>
 {% endif %}
 
-<form method="post" class="card p-4 shadow">
-{% csrf_token %}
-{{ form.as_p }}
+<!-- Form Card -->
+<div class="row justify-content-center">
+<div class="col-md-8 col-lg-6">
 
-<button class="btn btn-success">Generate Bill</button>
+<form method="post" class="card shadow-lg p-4 border-0">
+{% csrf_token %}
+
+<!-- Fields -->
+<div class="mb-3">
+    <label class="form-label fw-semibold">Medicine</label>
+    {{ form.medicine }}
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-semibold">Quantity</label>
+    {{ form.quantity }}
+</div>
+
+<!-- Button -->
+<div class="d-grid mt-3">
+<button class="btn btn-success btn-lg">
+    Generate Bill 💰
+</button>
+</div>
+
 </form>
+
+</div>
+</div>
+
+</div>
 
 {% endblock %}

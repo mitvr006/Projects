@@ -30,6 +30,11 @@ class SaleForm(forms.ModelForm):
         model = Sale
         fields = ['medicine', 'quantity']
 
+        widgets = {
+            'medicine': forms.Select(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter quantity'}),
+        }
+
 def sale_create(request):
     form = SaleForm(request.POST or None)
 

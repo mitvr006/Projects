@@ -1,39 +1,81 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Daily Sales Report</h2>
+<div class="container mt-4">
 
-<a href="{% url 'export_sales' %}" class="btn btn-success">
-📥 Download Sales Report
-</a>
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="fw-bold">📊 Daily Sales Report</h3>
 
-<p><strong>Date:</strong> {{ today }}</p>
-
-<div class="card p-3 mb-3">
-<h4>Total Sales: {{ total_sales }}</h4>
-<h4>Total Revenue: ₹{{ total_revenue }}</h4>
+    <a href="{% url 'export_sales' %}" class="btn btn-success">
+        📥 Download CSV
+    </a>
 </div>
 
-<table class="table table-bordered">
+<!-- Date -->
+<p class="text-muted mb-4">
+    <strong>Date:</strong> {{ today }}
+</p>
 
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+
+<div class="col-12 col-md-6">
+<div class="card shadow-sm border-0 p-3 text-center">
+<h6 class="text-muted">Total Sales</h6>
+<h3 class="fw-bold text-primary">{{ total_sales }}</h3>
+</div>
+</div>
+
+<div class="col-12 col-md-6">
+<div class="card shadow-sm border-0 p-3 text-center">
+<h6 class="text-muted">Total Revenue</h6>
+<h3 class="fw-bold text-success">₹{{ total_revenue }}</h3>
+</div>
+</div>
+
+</div>
+
+<!-- Table -->
+<div class="card shadow-lg border-0">
+<div class="table-responsive">
+
+<table class="table table-hover align-middle mb-0">
+
+<thead class="table-dark text-center">
 <tr>
-<th>Medicine</th>
-<th>Quantity</th>
-<th>Total Price</th>
-<th>Date</th>
+    <th>Medicine</th>
+    <th>Quantity</th>
+    <th>Total Price</th>
+    <th>Date</th>
 </tr>
+</thead>
 
+<tbody class="text-center">
 {% for sale in sales %}
-
 <tr>
-<td>{{ sale.medicine.name }}</td>
-<td>{{ sale.quantity }}</td>
-<td>₹{{ sale.total_price }}</td>
-<td>{{ sale.date }}</td>
-</tr>
+    <td class="fw-semibold">{{ sale.medicine.name }}</td>
 
+    <td>
+        <span class="badge bg-primary">
+            {{ sale.quantity }}
+        </span>
+    </td>
+
+    <td class="text-success fw-bold">
+        ₹{{ sale.total_price }}
+    </td>
+
+    <td>{{ sale.date }}</td>
+</tr>
 {% endfor %}
+</tbody>
 
 </table>
+
+</div>
+</div>
+
+</div>
 
 {% endblock %}
